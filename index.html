@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pablo Delcan Portfolio</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600&family=Instrument+Sans:wght@400;500&display=swap">
+<style>
+  /* Layout: one quiet column of very large images; a thin sticky bar keeps name, email and résumé in reach at all times. */
+  :root {
+    --bg: #f5f6f7;
+    --fg: #111315;
+    --muted: #666b72;
+    --line: #d9dce0;
+    --accent: #2438e0;
+    --tile-a: #dfe3ea;
+    --tile-b: #e9e2dc;
+    --tile-c: #dce6e1;
+    --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1113; --fg: #eceef0; --muted: #969ba3; --line: #2a2e33; --accent: #93a0ff;
+      --tile-a: #1c2028; --tile-b: #25211e; --tile-c: #1b2420;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1113; --fg: #eceef0; --muted: #969ba3; --line: #2a2e33; --accent: #93a0ff;
+    --tile-a: #1c2028; --tile-b: #25211e; --tile-c: #1b2420;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0 0 auto;
+    height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg);
+  }
+  a { color: inherit; text-underline-offset: 0.2em; }
+  a:hover { color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .wrap {
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  @media (min-width: 700px) {
+    .wrap {
+      padding-left: max(32px, env(safe-area-inset-left, 0px));
+      padding-right: max(32px, env(safe-area-inset-right, 0px));
+    }
+  }
+
+  /* Top bar */
+  .bar {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar .wrap {
+    display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+    gap: 4px 24px; padding-block: 14px;
+  }
+  .name { font-family: var(--display); font-weight: 600; font-size: 17px; text-decoration: none; }
+  .bar nav { display: flex; flex-wrap: wrap; gap: 4px 20px; font-size: 15px; }
+
+  .copy {
+    font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 0.2em; user-select: text;
+  }
+  .copy:hover { color: var(--accent); }
+
+  /* Intro */
+  .intro { padding-block: 56px 40px; }
+  .intro h1 {
+    font-family: var(--display); font-weight: 400;
+    font-size: clamp(30px, 5vw, 64px); line-height: 1.08; letter-spacing: -0.02em;
+    max-width: 18ch; margin: 0; text-wrap: balance;
+  }
+
+  /* Work */
+  .work { display: grid; grid-template-columns: 1fr; gap: 56px 24px; padding-block: 0 96px; }
+  @media (min-width: 800px) {
+    .work { grid-template-columns: 1fr 1fr; gap: 80px 32px; }
+    .work .full { grid-column: 1 / -1; }
+  }
+  figure { margin: 0; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+  figure img, .ph { width: 100%; max-width: 100%; display: block; object-fit: cover; }
+  .ph {
+    display: grid; place-items: center; text-align: center; padding: 16px;
+    color: var(--muted); font-size: 14px;
+  }
+  .r-wide { aspect-ratio: 16 / 9; }
+  .r-tall { aspect-ratio: 4 / 5; }
+  .r-photo { aspect-ratio: 3 / 2; }
+  .t-a { background: var(--tile-a); }
+  .t-b { background: var(--tile-b); }
+  .t-c { background: var(--tile-c); }
+  figcaption {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 16px; font-size: 15px;
+  }
+  figcaption span:last-child { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  /* Contact */
+  .contact { border-top: 1px solid var(--line); }
+  .contact .wrap { padding-block: 56px 72px; display: flex; flex-direction: column; gap: 20px; }
+  .label { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+  .email {
+    font-family: var(--display); font-weight: 400;
+    font-size: clamp(28px, 7.5vw, 112px); line-height: 1; letter-spacing: -0.03em;
+    overflow-wrap: anywhere; text-decoration: none; align-self: flex-start;
+  }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px 28px; font-size: 17px; }
+  .status { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="name" href="#top">Pablo Delcan</a>
+    <nav aria-label="Contact">
+      <button class="copy" id="copy-top" type="button" data-email="pablo@delcan.co">pablo@delcan.co</button>
+      <a href="#contact">Résumé</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="intro wrap">
+    <!-- EDIT: one line about what you do -->
+    <h1>Designer. Selected work, shown large.</h1>
+  </section>
+
+  <!--
+    EDIT: each <figure> is one project. Replace the <div class="ph ..."> with
+    <img src="your-image.jpg" alt="Short description" class="r-wide">
+    Classes: r-wide (16:9), r-photo (3:2), r-tall (4:5). Add class="full" on the
+    figure for a full-width image; leave it off to sit two side by side.
+  -->
+  <section class="work wrap" aria-label="Selected work">
+    <figure class="full">
+      <div class="ph r-wide t-a">Your image here · full width, 16:9</div>
+      <figcaption><span>Project title</span><span>Discipline, year</span></figcaption>
+    </figure>
+    <figure>
+      <div class="ph r-tall t-b">Your image here · 4:5</div>
+      <figcaption><span>Project title</span><span>Discipline, year</span></figcaption>
+    </figure>
+    <figure>
+      <div class="ph r-tall t-c">Your image here · 4:5</div>
+      <figcaption><span>Project title</span><span>Discipline, year</span></figcaption>
+    </figure>
+    <figure class="full">
+      <div class="ph r-photo t-b">Your image here · full width, 3:2</div>
+      <figcaption><span>Project title</span><span>Discipline, year</span></figcaption>
+    </figure>
+    <figure class="full">
+      <div class="ph r-wide t-c">Your image here · full width, 16:9</div>
+      <figcaption><span>Project title</span><span>Discipline, year</span></figcaption>
+    </figure>
+  </section>
+</main>
+
+<footer class="contact" id="contact">
+  <div class="wrap">
+    <p class="label">Contact</p>
+    <a class="email" href="mailto:pablo@delcan.co">pablo@delcan.co</a>
+    <div class="actions">
+      <button class="copy" id="copy-bottom" type="button" data-email="pablo@delcan.co">Copy email</button>
+      <!-- EDIT: point this at your résumé PDF, e.g. href="https://yoursite.com/resume.pdf" -->
+      <span class="status" id="resume-link">Résumé (PDF link to add)</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    var original = btn.textContent;
+    btn.addEventListener('click', function () {
+      var done = function () {
+        btn.textContent = 'Copied';
+        setTimeout(function () { btn.textContent = original; }, 1500);
+      };
+      try {
+        navigator.clipboard.writeText(btn.dataset.email).then(done, function () {});
+      } catch (e) {}
+    });
+  });
+</script>
+</body>
+</html>
